@@ -5,7 +5,8 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os, hashlib
 
-
+import cloudinary
+import cloudinary.uploader
 
 
 app=Flask(__name__)
@@ -13,7 +14,11 @@ app.secret_key = os.getenv('SECRET_KEY', 'supersecret')
 # enable CORS for all resources
 # CORS(app)
 CORS(app, supports_credentials=True)
-
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+)
 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -165,9 +170,11 @@ def upload_image():
 
     filename = secure_filename(file.filename)
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(path)
+    # file.save(path)
+    upload_result = cloudinary.uploader.upload(file)
+    image_url = upload_result['secure_url']
 
-    return jsonify({'url': f'http://localhost:5000/uploads/{filename}'})
+    return jsonify({'url': image_url})
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
