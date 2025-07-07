@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: flask-server
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn server:app
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres:Wahidul123@localhost/interior_design
+      - key: SECRET_KEY
+        value: supersecret
+      - key: MAIL_USERNAME
+        value: awahidul606@gmail.com
+      - key: MAIL_PASSWORD
+        value: icof mxko tcfy rrap
