@@ -6,7 +6,7 @@ services:
     startCommand: gunicorn server:app
     envVars:
       - key: DATABASE_URL
-        value: postgresql://postgres:Wahidul123@localhost/interior_design
+        value: postgresql://elegence_db_user:XMKVX86zaZjb4XUCGaSBM7Cc3sTWB0oh@dpg-d1ojnb0dl3ps73fhuvag-a/elegence_db
       - key: SECRET_KEY
         value: supersecret
       - key: MAIL_USERNAME
