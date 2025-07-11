@@ -252,7 +252,11 @@ def init_db():
         if not Admin.query.filter_by(username='admin').first():
             db.session.add(Admin(username='admin', password_hash=hash_password('admin123')))
             db.session.commit()
-
+            
+@app.route('/init_db')
+def trigger_init_db():
+    init_db()
+    return "✅ Database initialized on Render!"
 if __name__=="__main__":
         init_db()
         app.run(debug=True)
