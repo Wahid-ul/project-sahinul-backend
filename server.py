@@ -222,7 +222,7 @@ def upload_gallery_images():
         filename = secure_filename(file.filename)
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(save_path)
-        image_url = f'http://localhost:5000/uploads/{filename}'
+        image_url = f'https://elegence-civil-arc-server.onrender.com/uploads/{filename}'
         image_urls.append(image_url)
 
     # Save to gallery_images table
@@ -252,7 +252,7 @@ def init_db():
         if not Admin.query.filter_by(username='admin').first():
             db.session.add(Admin(username='admin', password_hash=hash_password('admin123')))
             db.session.commit()
-            
+
 @app.route('/init_db')
 def trigger_init_db():
     init_db()
